@@ -1,0 +1,7 @@
+---
+# Ignore react-router and react-router-dom
+upgrade: true
+packageManager: yarn
+reject:
+  - react-router
+  - react-router-dom
