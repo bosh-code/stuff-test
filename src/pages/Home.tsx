@@ -1,6 +1,8 @@
 import {
+    IonChip,
     IonContent,
     IonHeader,
+    IonLabel,
     IonPage,
     IonRefresher,
     IonRefresherContent,
@@ -12,7 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { StoryCard } from "@components";
-import { IStory } from "@interfaces";
+import { IStory, Section } from "@interfaces";
 import { getStories } from "@services";
 
 import "./Home.scss";
@@ -20,6 +22,7 @@ import "./Home.scss";
 export const Home: React.FC = () => {
 
     const [stories, setStories] = useState<IStory[]>([]);
+    const [sectionFilter, setSectionFilter] = useState<string>("");
 
     // Set a nice page title
     useEffect(() => {
@@ -30,9 +33,6 @@ export const Home: React.FC = () => {
     const updateStories = async () => {
         setStories([]);
         const newStories = await getStories();
-        for (let i = 0; i < newStories.stories.length; i++) {
-            console.log(newStories.stories[i].story.section);
-        }
         setStories(newStories.stories);
     };
 
@@ -45,10 +45,18 @@ export const Home: React.FC = () => {
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
         setTimeout(async () => {
             // Any calls to load data go here
-            console.log("handleRefresh");
             await updateStories();
             event.detail.complete();
         }, 2000);
+    };
+
+    // If section filter is set to argument, clear it, otherwise set it to new section
+    const updateSectionFilter = (section: string) => {
+        if (sectionFilter === section) {
+            setSectionFilter("");
+        } else {
+            setSectionFilter(section);
+        }
     };
 
     return (
@@ -71,12 +79,33 @@ export const Home: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
 
-                <div id="stories-container">
+                {/* Section Chips */}
+                <span>
+                    {Object.keys(Section).map((section, index) => {
+                        return <IonChip color={sectionFilter === section ? "primary" : ""}
+                                        key={index}
+                                        onClick={() => updateSectionFilter(section)}>
+                            <IonLabel>
+                                {section}
+                            </IonLabel>
+                        </IonChip>;
+                    })}
+                </span>
+
+                {/* Section filter set */}
+                {sectionFilter !== "" && <div id="stories-container">
+                    {/* Map over filtered stories that have the same section */}
+                    {stories.filter(story => story.story.section === sectionFilter).map(story =>
+                        <StoryCard key={"story-" + story.storyId} story={story}/>
+                    )}
+                </div>}
+
+                {/* Section filter not set, show all stories */}
+                {sectionFilter === "" && <div id="stories-container">
                     {stories.map(story =>
                         <StoryCard key={"story-" + story.storyId} story={story}/>
                     )}
-                </div>
-
+                </div>}
             </IonContent>
         </IonPage>
     );
