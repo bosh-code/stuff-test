@@ -1,37 +1,74 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonRefresher,
+    IonRefresherContent,
+    IonTitle,
+    IonToolbar,
+    RefresherEventDetail,
+    useIonViewWillEnter
+} from "@ionic/react";
 import React, { useState } from "react";
 
-import "./Home.css";
-
-import { ExploreContainer } from "@components";
+import { StoryListItem } from "@components";
 import { IStory } from "@interfaces";
 import { getStories } from "@services";
+
+import "./Home.scss";
 
 export const Home: React.FC = () => {
 
     const [stories, setStories] = useState<IStory[]>([]);
 
-    useIonViewWillEnter(async () => {
-        console.log("useIonViewWillEnter");
+    // Clear and reload stories
+    const updateStories = async () => {
+        setStories([]);
         const newStories = await getStories();
         setStories(newStories.stories);
+    };
+
+    // On page load, update stories
+    useIonViewWillEnter(async () => {
+        await updateStories();
     });
 
-    return (
+    // On refresh, update stories
+    const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+        setTimeout(async () => {
+            // Any calls to load data go here
+            console.log("handleRefresh");
+            await updateStories();
+            event.detail.complete();
+        }, 2000);
+    };
 
-        <IonPage>
+    return (
+        <IonPage id="home-page">
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Blank</IonTitle>
+                    <IonTitle>Home</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
+                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">Blank</IonTitle>
+                        <IonTitle size="large">
+                            Home
+                        </IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <ExploreContainer/>
+
+                <div id="stories-container">
+                    {stories.map(story =>
+                        <StoryListItem key={"story-" + story.storyId} story={story}/>
+                    )}
+                </div>
+
             </IonContent>
         </IonPage>
     );
