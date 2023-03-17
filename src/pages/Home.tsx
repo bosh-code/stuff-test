@@ -1,11 +1,24 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
-import React from "react";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from "@ionic/react";
+import React, { useState } from "react";
 
-import ExploreContainer from "../components/ExploreContainer";
 import "./Home.css";
 
-const Home: React.FC = () => {
+import { getStories } from "../services";
+import { IStory } from "../interfaces";
+import { ExploreContainer } from "../components/ExploreContainer";
+
+export const Home: React.FC = () => {
+
+    const [stories, setStories] = useState<IStory[]>([]);
+
+    useIonViewWillEnter(async () => {
+        console.log("useIonViewWillEnter");
+        const newStories = await getStories();
+        setStories(newStories.stories);
+    });
+
     return (
+
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -23,5 +36,3 @@ const Home: React.FC = () => {
         </IonPage>
     );
 };
-
-export default Home;
