@@ -9,7 +9,7 @@ import {
     RefresherEventDetail,
     useIonViewWillEnter
 } from "@ionic/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { StoryCard } from "@components";
 import { IStory } from "@interfaces";
@@ -21,10 +21,18 @@ export const Home: React.FC = () => {
 
     const [stories, setStories] = useState<IStory[]>([]);
 
+    // Set a nice page title
+    useEffect(() => {
+        document.title = "Latest Breaking Code | Stuff Test";
+    }, []);
+
     // Clear and reload stories
     const updateStories = async () => {
         setStories([]);
         const newStories = await getStories();
+        for (let i = 0; i < newStories.stories.length; i++) {
+            console.log(newStories.stories[i].story.section);
+        }
         setStories(newStories.stories);
     };
 
@@ -47,7 +55,7 @@ export const Home: React.FC = () => {
         <IonPage id="home-page">
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Home</IonTitle>
+                    <IonTitle>Stories</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -58,7 +66,7 @@ export const Home: React.FC = () => {
                 <IonHeader collapse="condense">
                     <IonToolbar>
                         <IonTitle size="large">
-                            Home
+                            Stories
                         </IonTitle>
                     </IonToolbar>
                 </IonHeader>

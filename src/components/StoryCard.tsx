@@ -11,7 +11,7 @@ interface StoryListItemProps {
 
 export const StoryCard: React.FC<StoryListItemProps> = ({story}) => {
     return (
-        <IonCard routerLink={`/story/${story.storyId}`}>
+        <IonCard routerLink={`/${story.story.section}/${story.storyId}`}>
             <IonImg alt={story.story.images[0].caption}
                     src={story.story.images[0].src}
                     placeholder="assets/images/story-card-image-placeholder.png"/>

@@ -7,3 +7,8 @@ export const getStories = async (): Promise<IStoriesDTO> => {
     const response = await fetch(url);
     return await response.json();
 };
+
+export const getStoryById = async (id: string) => {
+    const stories = await getStories();
+    return stories.stories.find((story) => story.storyId === id);
+};
