@@ -11,7 +11,7 @@ import {
 } from "@ionic/react";
 import React, { useState } from "react";
 
-import { StoryListItem } from "@components";
+import { StoryCard } from "@components";
 import { IStory } from "@interfaces";
 import { getStories } from "@services";
 
@@ -65,7 +65,7 @@ export const Home: React.FC = () => {
 
                 <div id="stories-container">
                     {stories.map(story =>
-                        <StoryListItem key={"story-" + story.storyId} story={story}/>
+                        <StoryCard key={"story-" + story.storyId} story={story}/>
                     )}
                 </div>
 

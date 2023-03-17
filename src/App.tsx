@@ -3,7 +3,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import { Home } from "@pages";
+import { Home, StoryView } from "@pages";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -35,6 +35,9 @@ const App: React.FC = () => (
                 </Route>
                 <Route exact path="/">
                     <Redirect to="/home"/>
+                </Route>
+                <Route path="/story/:id">
+                    <StoryView />
                 </Route>
             </IonRouterOutlet>
         </IonReactRouter>

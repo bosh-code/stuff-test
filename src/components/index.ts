@@ -1,1 +1,1 @@
-export { StoryListItem } from "./StoryListItem";
+export { StoryCard } from "./StoryCard";
