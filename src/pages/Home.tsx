@@ -6,6 +6,8 @@ import {
     IonPage,
     IonRefresher,
     IonRefresherContent,
+    IonSegment,
+    IonSegmentButton,
     IonTitle,
     IonToolbar,
     RefresherEventDetail,
@@ -20,9 +22,12 @@ import { getStories } from "@services";
 import "./Home.scss";
 
 export const Home: React.FC = () => {
-
+    // Stories state
     const [stories, setStories] = useState<IStory[]>([]);
+    // Section filter, default is all sections
     const [sectionFilter, setSectionFilter] = useState<string>("");
+    // Date Sorting segment, default is newest first
+    const [dateSort, setDateSort] = useState<string>("default");
 
     // Set a nice page title
     useEffect(() => {
@@ -61,13 +66,16 @@ export const Home: React.FC = () => {
 
     return (
         <IonPage id="home-page">
+
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Stories</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
-                <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+                <IonRefresher slot="fixed"
+                              onIonRefresh={handleRefresh}>
                     <IonRefresherContent></IonRefresherContent>
                 </IonRefresher>
 
@@ -79,8 +87,20 @@ export const Home: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
 
-                {/* Section Chips */}
-                <span>
+                <div id="controls-container">
+                    {/* Date Sorting */}
+                    <IonSegment value={dateSort}
+                                onIonChange={(event) => setDateSort(event.detail.value!)}>
+                        <IonSegmentButton value="default">
+                            <IonLabel>Newest</IonLabel>
+                        </IonSegmentButton>
+                        <IonSegmentButton value="alternate">
+                            <IonLabel>Oldest</IonLabel>
+                        </IonSegmentButton>
+                    </IonSegment>
+
+                    {/* Section Chips */}
+                    <span id="chips-container">
                     {Object.keys(Section).map((section, index) => {
                         return <IonChip color={sectionFilter === section ? "primary" : ""}
                                         key={index}
@@ -91,19 +111,22 @@ export const Home: React.FC = () => {
                         </IonChip>;
                     })}
                 </span>
+                </div>
 
-                {/* Section filter set */}
+                {/* Section filter is set */}
                 {sectionFilter !== "" && <div id="stories-container">
                     {/* Map over filtered stories that have the same section */}
                     {stories.filter(story => story.story.section === sectionFilter).map(story =>
-                        <StoryCard key={"story-" + story.storyId} story={story}/>
+                        <StoryCard key={"story-" + story.storyId}
+                                   story={story}/>
                     )}
                 </div>}
 
                 {/* Section filter not set, show all stories */}
                 {sectionFilter === "" && <div id="stories-container">
                     {stories.map(story =>
-                        <StoryCard key={"story-" + story.storyId} story={story}/>
+                        <StoryCard key={"story-" + story.storyId}
+                                   story={story}/>
                     )}
                 </div>}
             </IonContent>

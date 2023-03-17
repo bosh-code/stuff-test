@@ -13,3 +13,24 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+
+#controls-container {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  // Medium breakpoint (tablet device)
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  // sm breakpoint (mobile device)
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+#chips-container {
+  // Nice spacing from the segment control
+  margin-top: 5px;
+}
