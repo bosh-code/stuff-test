@@ -3,9 +3,9 @@ import React, { useState } from "react";
 
 import "./Home.css";
 
-import { getStories } from "../services";
-import { IStory } from "../interfaces";
-import { ExploreContainer } from "../components/ExploreContainer";
+import { ExploreContainer } from "@components";
+import { IStory } from "@interfaces";
+import { getStories } from "@services";
 
 export const Home: React.FC = () => {
 

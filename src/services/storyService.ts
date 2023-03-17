@@ -1,4 +1,4 @@
-import { IStoriesDTO } from "../interfaces";
+import { IStoriesDTO } from "@interfaces";
 
 const url = "https://www.stuff.co.nz/static/spade/nCuL9ZmbMXzhGbHTJNJYU6i45y9hj0DJrhPteuU6MGB68zM5goWqk5Q1aNkh.json";
 

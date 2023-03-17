@@ -1,1 +1,1 @@
-export * from "./storyService"
+export { getStories } from "./storyService";
