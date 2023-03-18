@@ -3,13 +3,11 @@ import React from "react";
 
 import { Story } from "@models";
 
-import "./StoryCard.scss";
-
-interface StoryListItemProps {
+interface StoryCardProps {
     story: Story;
 }
 
-export const StoryCard: React.FC<StoryListItemProps> = ({story}) => (
+export const StoryCard: React.FC<StoryCardProps> = ({story}) => (
     <IonCard routerLink={`/${story.story.section}/${story.storyId}`}>
         <IonImg alt={story.story.images[0].caption}
                 src={story.story.images[0].src}

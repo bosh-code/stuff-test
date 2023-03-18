@@ -42,12 +42,12 @@ export const StoryView: React.FC = () => {
             <IonHeader translucent>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonBackButton text="Back" defaultHref="/"></IonBackButton>
+                        <IonBackButton text="Back" defaultHref="/" />
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent id="story-view" fullscreen>
                 {story ? (
                     <>
                         <IonImg alt={story.story.images[0].caption}
@@ -56,19 +56,17 @@ export const StoryView: React.FC = () => {
 
                         <div className="ion-padding">
                             <span>
-                                <IonChip>
+                                <IonChip className="story-chip">
                                     {story.story.section}
                                 </IonChip>
-                                <IonChip>
+                                <IonChip className="story-chip">
                                     {story.publishedDate.setLocale("nz").toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)}
                                 </IonChip>
                             </span>
 
                             <h1>{story.story.headline}</h1>
 
-                            <p>
-                                {story.story.intro}
-                            </p>
+                            <p>{story.story.intro}</p>
                         </div>
                     </>
                 ) : (

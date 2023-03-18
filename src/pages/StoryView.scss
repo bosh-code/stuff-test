@@ -1,0 +1,16 @@
+#story-view {
+  // Set a max width when viewed on larger devices
+  max-width: 800px;
+
+  // Hacky way to center on larger devices
+  @media (min-width: 800px) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.story-chip {
+  cursor: default;
+}
