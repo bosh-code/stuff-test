@@ -6,6 +6,7 @@ const url = "https://www.stuff.co.nz/static/spade/nCuL9ZmbMXzhGbHTJNJYU6i45y9hj0
 // Private method to get stories from API
 const getStoriesFromAPI = async (): Promise<IStoriesDTO> => {
     const response = await fetch(url);
+    // TODO: Handle error
     return await response.json();
 };
 
@@ -19,5 +20,6 @@ export const getStories = async (): Promise<Story[]> => {
 export const getStoryById = async (id: string): Promise<Story> => {
     const stories = await getStoriesFromAPI();
     const foundStory = stories.stories.find((story) => story.storyId === id);
+    // TODO: Handle not found
     return new Story(foundStory!);
 }

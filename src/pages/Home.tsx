@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
     const [stories, setStories] = useState<Story[]>([]);
     // Section filter, default is all sections
     const [sectionFilter, setSectionFilter] = useState<string>("");
-    // Date Sorting segment, default is newest first
+    // Date Sorting segment value, in state to persist across page loads
     const [dateSort, setDateSort] = useState<string>("default");
 
     // Set a nice page title
@@ -39,6 +39,11 @@ export const Home: React.FC = () => {
     const updateStories = async () => {
         setStories([]);
         const newStories = await getStories();
+
+        // Sort new stories descending by date by default
+        newStories.sort((a, b) =>
+            a.publishedDate > b.publishedDate ? -1 : a.publishedDate < b.publishedDate ? 1 : 0);
+
         setStories(newStories);
     };
 
@@ -63,6 +68,12 @@ export const Home: React.FC = () => {
         } else {
             setSectionFilter(section);
         }
+    };
+
+    // Set the new value for the date sorting segment and reverse the stories array
+    const updateDateSort = (sort: string) => {
+        setDateSort(sort);
+        stories.reverse();
     };
 
     return (
@@ -91,7 +102,7 @@ export const Home: React.FC = () => {
                 <div id="controls-container">
                     {/* Date Sorting */}
                     <IonSegment value={dateSort}
-                                onIonChange={(event) => setDateSort(event.detail.value!)}>
+                                onIonChange={(event) => updateDateSort(event.detail.value!)}>
                         <IonSegmentButton value="default">
                             <IonLabel>Newest</IonLabel>
                         </IonSegmentButton>
