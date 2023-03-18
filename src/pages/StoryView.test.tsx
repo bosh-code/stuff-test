@@ -15,6 +15,7 @@ describe("StoryView Page", () => {
             jest.spyOn(Router, "useParams").mockReturnValue({id: "300259036"});
 
             const {baseElement} = render(<StoryView/>);
+
             expect(baseElement).toBeDefined();
         });
     });

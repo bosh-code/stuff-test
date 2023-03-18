@@ -95,6 +95,7 @@ describe("StoryCard Component", () => {
     describe("Rendering", () => {
         it("should render the StoryCard component", () => {
             const {baseElement} = render(<StoryCard story={story}/>);
+
             expect(baseElement).toBeDefined();
         });
     });
