@@ -1,5 +1,5 @@
 import { IImage } from "./IImage";
-import { Section } from "./enums";
+import { Section } from "@enums";
 
 /**
  * The child Story interface

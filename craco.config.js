@@ -2,7 +2,9 @@ const path = require(`path`);
 
 const pathAliases = {
     "@components": path.resolve(__dirname, "src/components"),
+    "@enums": path.resolve(__dirname, "src/enums"),
     "@interfaces": path.resolve(__dirname, "src/interfaces"),
+    "@models": path.resolve(__dirname, "src/models"),
     "@pages": path.resolve(__dirname, "src/pages"),
     "@services": path.resolve(__dirname, "src/services")
 };

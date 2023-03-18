@@ -16,14 +16,15 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { StoryCard } from "@components";
-import { IStory, Section } from "@interfaces";
+import { Section } from "@enums";
+import { Story } from "@models";
 import { getStories } from "@services";
 
 import "./Home.scss";
 
 export const Home: React.FC = () => {
     // Stories state
-    const [stories, setStories] = useState<IStory[]>([]);
+    const [stories, setStories] = useState<Story[]>([]);
     // Section filter, default is all sections
     const [sectionFilter, setSectionFilter] = useState<string>("");
     // Date Sorting segment, default is newest first
@@ -38,13 +39,13 @@ export const Home: React.FC = () => {
     const updateStories = async () => {
         setStories([]);
         const newStories = await getStories();
-        setStories(newStories.stories);
+        setStories(newStories);
     };
 
     // On page load, update stories
     useIonViewWillEnter(async () => {
         await updateStories();
-    });
+    }, []);
 
     // On refresh, update stories
     const handleRefresh = (event: CustomEvent<RefresherEventDetail>) => {

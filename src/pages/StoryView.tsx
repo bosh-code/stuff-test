@@ -9,16 +9,17 @@ import {
     IonToolbar,
     useIonViewWillEnter
 } from "@ionic/react";
+import { DateTime } from "luxon";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import { IStory } from "@interfaces";
-
 import "./StoryView.scss";
+
 import { getStoryById } from "@services";
+import { Story } from "@models";
 
 export const StoryView: React.FC = () => {
-    const [story, setStory] = useState<IStory>();
+    const [story, setStory] = useState<Story>();
     const params = useParams<{ id: string }>();
 
     // Set placeholder title for page
@@ -59,7 +60,7 @@ export const StoryView: React.FC = () => {
                                     {story.story.section}
                                 </IonChip>
                                 <IonChip>
-                                    {story.publishedDate}
+                                    {story.publishedDate.setLocale("nz").toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY)}
                                 </IonChip>
                             </span>
 

@@ -19,13 +19,20 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "strictPropertyInitialization": true,
     "baseUrl": ".",
     "paths": {
       "@components": [
         "src/components"
       ],
+      "@enums": [
+        "src/enums"
+      ],
       "@interfaces": [
         "src/interfaces"
+      ],
+      "@models": [
+        "src/models"
       ],
       "@pages": [
         "src/pages"
